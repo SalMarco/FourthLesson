@@ -12766,7 +12766,7 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 <h2 id="Autoencoders">Autoencoders<a class="anchor-link" href="#Autoencoders">&#182;</a></h2>
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[40]:</div>
@@ -12908,7 +12908,7 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 </div>
 </div>
 
-</div>
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[41]:</div>
@@ -13037,27 +13037,144 @@ Epoch 5/5
 </div>
 </div>
 
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise">Exercise<a class="anchor-link" href="#Exercise">&#182;</a></h2><p>For the code below:</p>
+<ul>
+<li>Give an <em>high level</em> description of what the code does</li>
+<li>Give a <em>line by line</em> description of the methodos <code>makeJoin</code> and <code>preProcess</code>.</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">preprocessing</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> : </span><span class="si">%(levelname)s</span><span class="s1"> : </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">dataFolder</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+<span class="n">chifData</span> <span class="o">=</span> <span class="s1">&#39;chifdata&#39;</span>
+<span class="n">prospFile</span> <span class="o">=</span> <span class="s1">&#39;all_prospects_france.csv&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">MakeClusters</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outFile</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;fo&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numClus</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;nk&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numEmp</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;ne&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">siren</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;si&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span>
+
+
+
+    <span class="k">def</span> <span class="nf">makeClusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Defining KMeans with </span><span class="si">%i</span><span class="s1"> clusters&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">numClus</span><span class="p">)</span>
+        <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">numClus</span><span class="p">)</span>
+        <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">centroids</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Adding labels to the dataframes&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Résultat 1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Siren&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">siren</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span> <span class="nf">writeOutFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing out file to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">outFile</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outFile</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PrepareData</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inFile</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;fi&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inDir</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;di&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numEmp</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;ne&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">readOne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Reading data from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">inFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfPros</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inFile</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;columns for prof&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfPros</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfPros</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfPros</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">readMultiple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inDir</span><span class="p">):</span>
+            <span class="n">fi</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inDir</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Readin file </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">fi</span><span class="p">)</span>
+            <span class="n">curdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fi</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span><span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Siren&#39;</span><span class="p">,</span><span class="s1">&#39;Résultat 1&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curdf</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;columns for info&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">makeJoin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Making the join&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfJoin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfPros</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;SIREN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dfInfo</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Siren&#39;</span><span class="p">),</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfJoin</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shape after join:&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfJoin</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dfJoin</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfJoin</span>
+
+    <span class="k">def</span> <span class="nf">preProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Removing rows with more that </span><span class="si">%i</span><span class="s1"> employes&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">numEmp</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;eff_category&#39;</span><span class="p">]</span><span class="o">&lt;=</span><span class="bp">self</span><span class="o">.</span><span class="n">numEmp</span><span class="p">]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;SCALING VARIABILES&#39;</span><span class="p">)</span>
+        <span class="n">min_max_scaler</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">MinMaxScaler</span><span class="p">()</span>
+        <span class="n">np_scaled</span> <span class="o">=</span> <span class="n">min_max_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Résultat 1&#39;</span><span class="p">]))</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;to_norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np_scaled</span>
+        <span class="n">to</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Résultat 1&#39;</span><span class="p">]]</span>
+        <span class="n">siren</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;index&#39;</span><span class="p">]]</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Résultat 1&#39;</span><span class="p">,</span><span class="s1">&#39;index&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">siren</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;START&quot;</span><span class="p">)</span>
+    <span class="n">inFile</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">dataFolder</span><span class="p">,</span><span class="n">prospFile</span><span class="p">)</span>
+    <span class="n">inDir</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">dataFolder</span><span class="p">,</span><span class="n">chifData</span><span class="p">)</span>
+    <span class="n">numClus</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">outFile</span> <span class="o">=</span> <span class="s1">&#39;testClustering.csv&#39;</span>
+    <span class="n">numEmp</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;RUNNING WITH INFILE </span><span class="si">%s</span><span class="s2">, OUTFILE </span><span class="si">%s</span><span class="s2"> , NUM EMPLOIES </span><span class="si">%d</span><span class="s2"> AND NUM OF CLUSTER </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">inFile</span><span class="p">,</span><span class="n">outFile</span><span class="p">,</span><span class="n">numEmp</span><span class="p">,</span><span class="n">numClus</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;INSTANTIATE PREPAREDATA&#39;</span><span class="p">)</span>
+    <span class="n">pdt</span> <span class="o">=</span> <span class="n">PrepareData</span><span class="p">(</span><span class="n">fi</span><span class="o">=</span><span class="n">inFile</span><span class="p">,</span><span class="n">di</span><span class="o">=</span><span class="n">inDir</span><span class="p">,</span><span class="n">ne</span><span class="o">=</span><span class="n">numEmp</span><span class="p">)</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">readOne</span><span class="p">()</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">readMultiple</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pdt</span><span class="o">.</span><span class="n">makeJoin</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">,</span><span class="n">to</span><span class="p">,</span><span class="n">siren</span> <span class="o">=</span> <span class="n">pdt</span><span class="o">.</span><span class="n">preProcess</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;INSTANTIATE MAKECLUSTER&#39;</span><span class="p">)</span>
+    <span class="n">mc</span> <span class="o">=</span> <span class="n">MakeClusters</span><span class="p">(</span><span class="n">fo</span><span class="o">=</span><span class="n">outFile</span><span class="p">,</span><span class="n">nk</span><span class="o">=</span><span class="n">numClus</span><span class="p">,</span><span class="n">ne</span><span class="o">=</span><span class="n">numEmp</span><span class="p">,</span><span class="n">si</span><span class="o">=</span><span class="n">siren</span><span class="p">,</span><span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">makeClusters</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">mc</span><span class="o">.</span><span class="n">writeOutFile</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;DONE IN </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;END&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div>
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13070,21 +13187,104 @@ Epoch 5/5
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[31]:</div>
+<div class="prompt"></div>
 
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-18 21:00:16,318 : INFO : START
+2018-10-18 21:00:16,319 : INFO : RUNNING WITH INFILE data/all_prospects_france.csv, OUTFILE testClustering.csv , NUM EMPLOIES 10 AND NUM OF CLUSTER 5
+2018-10-18 21:00:16,321 : INFO : INSTANTIATE PREPAREDATA
+2018-10-18 21:00:16,322 : INFO : Reading data from data/all_prospects_france.csv
+2018-10-18 21:00:16,501 : INFO : Readin file data/chifdata/chiffres-cles-2017 (1).csv
+2018-10-18 21:00:16,561 : INFO : Readin file data/chifdata/chiffres-cles-2017_2.csv
+2018-10-18 21:00:16,587 : INFO : Readin file data/chifdata/chiffres-cles-2017.csv
+2018-10-18 21:00:16,668 : INFO : Readin file data/chifdata/chiffres-cles-2017 (3).csv
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
 
 
-<div class="output_text output_subarea output_execute_result">
-<pre>5</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>columns for prof Index([&#39;SIREN&#39;, &#39;eff_category&#39;, &#39;business_segment&#39;], dtype=&#39;object&#39;) (466768, 3) SIREN                 int64
+eff_category        float64
+business_segment      int64
+dtype: object
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-18 21:00:16,730 : INFO : Readin file data/chifdata/chiffres-cles-2017 (4).csv
+2018-10-18 21:00:16,777 : INFO : Making the join
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>columns for info Index([&#39;Siren&#39;, &#39;Résultat 1&#39;], dtype=&#39;object&#39;) (44282, 2) Siren           int64
+Résultat 1    float64
+dtype: object
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-18 21:00:17,207 : INFO : Removing rows with more that 10 employes
+2018-10-18 21:00:17,210 : INFO : SCALING VARIABILES
+2018-10-18 21:00:17,218 : INFO : INSTANTIATE MAKECLUSTER
+2018-10-18 21:00:17,219 : INFO : Defining KMeans with 5 clusters
+2018-10-18 21:00:17,381 : INFO : Adding labels to the dataframes
+2018-10-18 21:00:17,388 : INFO : Writing out file to testClustering.csv
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape after join: (40689, 4) Index([&#39;index&#39;, &#39;eff_category&#39;, &#39;business_segment&#39;, &#39;Résultat 1&#39;], dtype=&#39;object&#39;)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-18 21:00:17,516 : INFO : DONE IN 0:00:01.197991
+2018-10-18 21:00:17,517 : INFO : END
+</pre>
+</div>
 </div>
 
 </div>
-
-</div>
 </div>
 
-</div></section></section>
+</div></div></section></section>
 </div>
 </div>
 

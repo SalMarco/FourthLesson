@@ -11918,9 +11918,9 @@ The topis that we'll cover in this lesson are:</p>
 <ul>
 <li>Dropout</li>
 <li>Grid Search</li>
-<li></li>
+<li>Autoencoders</li>
 </ul>
-<p>But before starting with the real Lesson let's make a little bit of advertising.</p>
+<p>But before starting with the real Lesson let's make a little bit of informations.</p>
 
 </div>
 </div>
@@ -11929,7 +11929,18 @@ The topis that we'll cover in this lesson are:</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Advertising">Advertising<a class="anchor-link" href="#Advertising">&#182;</a></h2>
+<h2 id="Informations">Informations<a class="anchor-link" href="#Informations">&#182;</a></h2>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exam-modality">Exam modality<a class="anchor-link" href="#Exam-modality">&#182;</a></h2><p>The exams will be a code snippet to comment.</p>
+<p>It may be required to give an high level or a <em>line by line</em> explanation.</p>
+<p>The arguments will be the same that we have touched in this four lessons.</p>
+
 </div>
 </div>
 </div></section></section><section><section>
@@ -11941,7 +11952,7 @@ The topis that we'll cover in this lesson are:</p>
 <ul>
 <li>marco.saletta@leroymerlin.it</li>
 </ul>
-<p>Now it's being created a data science unit and maybe we can work together.</p>
+<p>We are organizing a data science unit and maybe we can work together.</p>
 
 </div>
 </div>
@@ -12008,13 +12019,28 @@ The topis that we'll cover in this lesson are:</p>
 
 </div>
 </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise">Exercise<a class="anchor-link" href="#Exercise">&#182;</a></h2><p>For the code below:</p>
+<ul>
+<li>Give an <em>high level</em> description of what the code does</li>
+<li>Give a <em>line by line</em> description of the methodos <code>modelDefinition</code> and <code>PlotGraphs</code>.</li>
+</ul>
+<p><strong>HINT</strong>: <code>string.find(substring)</code> searches for a substring in a string. Returns <code>True</code> if present.</p>
+
+</div>
+</div>
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">keras.models</span> <span class="k">import</span> <span class="n">Sequential</span>
 <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
@@ -12107,15 +12133,22 @@ The topis that we'll cover in this lesson are:</p>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;START&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;INITIALIZATION OF PREPAREVARIABILES&#39;</span><span class="p">)</span>
     <span class="n">pv</span> <span class="o">=</span> <span class="n">PrepareVariabiles</span><span class="p">()</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">splitDatset</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;INITIALIZATION OF CREATENN&#39;</span><span class="p">)</span>
     <span class="n">cnn</span> <span class="o">=</span> <span class="n">CreateNN</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="n">xt</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span><span class="n">yt</span><span class="o">=</span><span class="n">Y_test</span><span class="p">)</span>
     <span class="n">cnn</span><span class="o">.</span><span class="n">modelDefinition</span><span class="p">()</span><span class="c1">#useDropout=True</span>
     <span class="n">cnn</span><span class="o">.</span><span class="n">modelCompile</span><span class="p">()</span>
     <span class="n">history</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">cnn</span><span class="o">.</span><span class="n">modelEval</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">%s</span><span class="s2">: </span><span class="si">%.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;INITIALIZATION OF PLOTGRAPH&#39;</span><span class="p">)</span>
     <span class="n">pg</span> <span class="o">=</span> <span class="n">PlotGraphs</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="n">history</span><span class="p">)</span>
     <span class="n">pg</span><span class="o">.</span><span class="n">plotResults</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;EXECUTED IN </span><span class="si">%f</span><span class="s2"> SEC&quot;</span><span class="o">%</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">))</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;END&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">history</span>
 </pre></div>
 
@@ -12123,10 +12156,28 @@ The topis that we'll cover in this lesson are:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Using TensorFlow backend.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
@@ -12145,45 +12196,119 @@ The topis that we'll cover in this lesson are:</p>
 <div class="prompt"></div>
 
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-19 09:18:53,151 : WARNING : From &lt;ipython-input-19-7f49cf93532c&gt;:26: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+2018-10-19 09:18:53,190 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please write your own downloading logic.
+2018-10-19 09:18:53,324 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:252: _internal_retry.&lt;locals&gt;.wrap.&lt;locals&gt;.wrapped_fn (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use urllib or similar directly.
+2018-10-19 09:19:19,649 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:262: extract_images (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Extracting /tmp/data/train-images-idx3-ubyte.gz
+<pre>Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
+Extracting /tmp/data/train-images-idx3-ubyte.gz
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-19 09:19:20,196 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:267: extract_labels (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+2018-10-19 09:19:20,238 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:110: dense_to_one_hot (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.one_hot on tensors.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
 Extracting /tmp/data/train-labels-idx1-ubyte.gz
 Extracting /tmp/data/t10k-images-idx3-ubyte.gz
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2018-10-19 09:19:20,582 : WARNING : From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:290: DataSet.__init__ (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully downloaded t10k-labels-idx1-ubyte.gz 4542 bytes.
 Extracting /tmp/data/t10k-labels-idx1-ubyte.gz
 Train on 55000 samples, validate on 10000 samples
 Epoch 1/15
-55000/55000 [==============================] - 8s 148us/step - loss: 0.2990 - acc: 0.9091 - mean_absolute_error: 0.0283 - val_loss: 0.1074 - val_acc: 0.9658 - val_mean_absolute_error: 0.0102
+55000/55000 [==============================] - 7s 136us/step - loss: 0.2248 - acc: 0.9332 - mean_absolute_error: 0.0218 - val_loss: 0.1144 - val_acc: 0.9630 - val_mean_absolute_error: 0.0109
 Epoch 2/15
-55000/55000 [==============================] - 8s 153us/step - loss: 0.1233 - acc: 0.9629 - mean_absolute_error: 0.0115 - val_loss: 0.0826 - val_acc: 0.9755 - val_mean_absolute_error: 0.0080
+55000/55000 [==============================] - 6s 112us/step - loss: 0.0849 - acc: 0.9745 - mean_absolute_error: 0.0082 - val_loss: 0.0794 - val_acc: 0.9747 - val_mean_absolute_error: 0.0075
 Epoch 3/15
-55000/55000 [==============================] - 8s 146us/step - loss: 0.0921 - acc: 0.9716 - mean_absolute_error: 0.0087 - val_loss: 0.0676 - val_acc: 0.9789 - val_mean_absolute_error: 0.0060
+55000/55000 [==============================] - 7s 130us/step - loss: 0.0540 - acc: 0.9828 - mean_absolute_error: 0.0054 - val_loss: 0.0719 - val_acc: 0.9778 - val_mean_absolute_error: 0.0059
 Epoch 4/15
-55000/55000 [==============================] - 8s 139us/step - loss: 0.0733 - acc: 0.9772 - mean_absolute_error: 0.0069 - val_loss: 0.0897 - val_acc: 0.9741 - val_mean_absolute_error: 0.0069
+55000/55000 [==============================] - 7s 119us/step - loss: 0.0400 - acc: 0.9869 - mean_absolute_error: 0.0040 - val_loss: 0.0886 - val_acc: 0.9733 - val_mean_absolute_error: 0.0065
 Epoch 5/15
-55000/55000 [==============================] - 8s 143us/step - loss: 0.0611 - acc: 0.9803 - mean_absolute_error: 0.0058 - val_loss: 0.0795 - val_acc: 0.9775 - val_mean_absolute_error: 0.0058
+55000/55000 [==============================] - 6s 117us/step - loss: 0.0325 - acc: 0.9892 - mean_absolute_error: 0.0033 - val_loss: 0.0843 - val_acc: 0.9768 - val_mean_absolute_error: 0.0057
 Epoch 6/15
-55000/55000 [==============================] - 7s 132us/step - loss: 0.0549 - acc: 0.9829 - mean_absolute_error: 0.0051 - val_loss: 0.0706 - val_acc: 0.9799 - val_mean_absolute_error: 0.0051
+55000/55000 [==============================] - 8s 142us/step - loss: 0.0265 - acc: 0.9913 - mean_absolute_error: 0.0027 - val_loss: 0.0728 - val_acc: 0.9805 - val_mean_absolute_error: 0.0046
 Epoch 7/15
-55000/55000 [==============================] - 8s 140us/step - loss: 0.0498 - acc: 0.9849 - mean_absolute_error: 0.0046 - val_loss: 0.0608 - val_acc: 0.9836 - val_mean_absolute_error: 0.0043
+55000/55000 [==============================] - 8s 137us/step - loss: 0.0225 - acc: 0.9925 - mean_absolute_error: 0.0022 - val_loss: 0.0840 - val_acc: 0.9770 - val_mean_absolute_error: 0.0055
 Epoch 8/15
-55000/55000 [==============================] - 7s 131us/step - loss: 0.0406 - acc: 0.9875 - mean_absolute_error: 0.0039 - val_loss: 0.0669 - val_acc: 0.9815 - val_mean_absolute_error: 0.0045
+55000/55000 [==============================] - 7s 135us/step - loss: 0.0212 - acc: 0.9929 - mean_absolute_error: 0.0021 - val_loss: 0.0895 - val_acc: 0.9780 - val_mean_absolute_error: 0.0049
 Epoch 9/15
-55000/55000 [==============================] - 8s 150us/step - loss: 0.0386 - acc: 0.9878 - mean_absolute_error: 0.0036 - val_loss: 0.0666 - val_acc: 0.9834 - val_mean_absolute_error: 0.0040
+55000/55000 [==============================] - 7s 125us/step - loss: 0.0176 - acc: 0.9944 - mean_absolute_error: 0.0017 - val_loss: 0.0799 - val_acc: 0.9813 - val_mean_absolute_error: 0.0043
 Epoch 10/15
-55000/55000 [==============================] - 8s 137us/step - loss: 0.0390 - acc: 0.9877 - mean_absolute_error: 0.0036 - val_loss: 0.0834 - val_acc: 0.9782 - val_mean_absolute_error: 0.0054
+55000/55000 [==============================] - 7s 133us/step - loss: 0.0163 - acc: 0.9949 - mean_absolute_error: 0.0015 - val_loss: 0.0805 - val_acc: 0.9793 - val_mean_absolute_error: 0.0046
 Epoch 11/15
-55000/55000 [==============================] - 8s 154us/step - loss: 0.0334 - acc: 0.9893 - mean_absolute_error: 0.0031 - val_loss: 0.0586 - val_acc: 0.9838 - val_mean_absolute_error: 0.0043
+55000/55000 [==============================] - 6s 118us/step - loss: 0.0150 - acc: 0.9950 - mean_absolute_error: 0.0014 - val_loss: 0.0957 - val_acc: 0.9794 - val_mean_absolute_error: 0.0046
 Epoch 12/15
-55000/55000 [==============================] - 7s 134us/step - loss: 0.0315 - acc: 0.9895 - mean_absolute_error: 0.0030 - val_loss: 0.0681 - val_acc: 0.9825 - val_mean_absolute_error: 0.0044
+55000/55000 [==============================] - 8s 140us/step - loss: 0.0138 - acc: 0.9954 - mean_absolute_error: 0.0013 - val_loss: 0.0983 - val_acc: 0.9788 - val_mean_absolute_error: 0.0049
 Epoch 13/15
-55000/55000 [==============================] - 7s 135us/step - loss: 0.0301 - acc: 0.9910 - mean_absolute_error: 0.0027 - val_loss: 0.0627 - val_acc: 0.9837 - val_mean_absolute_error: 0.0042
+55000/55000 [==============================] - 7s 130us/step - loss: 0.0127 - acc: 0.9960 - mean_absolute_error: 0.0012 - val_loss: 0.1008 - val_acc: 0.9779 - val_mean_absolute_error: 0.0050
 Epoch 14/15
-55000/55000 [==============================] - 8s 139us/step - loss: 0.0275 - acc: 0.9913 - mean_absolute_error: 0.0025 - val_loss: 0.0668 - val_acc: 0.9831 - val_mean_absolute_error: 0.0039
+55000/55000 [==============================] - 7s 128us/step - loss: 0.0142 - acc: 0.9959 - mean_absolute_error: 0.0012 - val_loss: 0.0871 - val_acc: 0.9817 - val_mean_absolute_error: 0.0042
 Epoch 15/15
-55000/55000 [==============================] - 8s 137us/step - loss: 0.0278 - acc: 0.9915 - mean_absolute_error: 0.0025 - val_loss: 0.0646 - val_acc: 0.9836 - val_mean_absolute_error: 0.0041
-10000/10000 [==============================] - 1s 64us/step
+55000/55000 [==============================] - 7s 127us/step - loss: 0.0072 - acc: 0.9976 - mean_absolute_error: 6.7430e-04 - val_loss: 0.1028 - val_acc: 0.9775 - val_mean_absolute_error: 0.0049
+10000/10000 [==============================] - 1s 59us/step
 
-acc: 98.36%
+acc: 97.75%
 [&#39;loss&#39;, &#39;acc&#39;, &#39;mean_absolute_error&#39;]
 </pre>
 </div>
@@ -12197,7 +12322,7 @@ acc: 98.36%
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -12210,13 +12335,13 @@ acc: 98.36%
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">cur_key</span> <span class="ow">in</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">cur_key</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;val&#39;</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">cur_key</span><span class="p">)</span>
+<span class="c1"># for cur_key in history.history.keys():</span>
+<span class="c1">#     if cur_key.find(&#39;val&#39;)!=0:</span>
+<span class="c1">#         print(cur_key)</span>
 </pre></div>
 
 </div>
@@ -12229,15 +12354,15 @@ acc: 98.36%
 
 <div class="output_area">
 
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[21]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>loss
-acc
-mean_absolute_error
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dict_keys([&#39;val_loss&#39;, &#39;val_acc&#39;, &#39;val_mean_absolute_error&#39;, &#39;loss&#39;, &#39;acc&#39;, &#39;mean_absolute_error&#39;])</pre>
 </div>
+
 </div>
 
 </div>
@@ -12270,10 +12395,22 @@ The same kind of machine learning model can require different constraints, weigh
 
 </div>
 </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise">Exercise<a class="anchor-link" href="#Exercise">&#182;</a></h2><p>For the code below:</p>
+<ul>
+<li>Give a <em>line by line</em> description of the <code>LoadData</code> class.</li>
+</ul>
+
+</div>
+</div>
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#general</span>
@@ -12298,7 +12435,6 @@ The same kind of machine learning model can require different constraints, weigh
 <span class="kn">from</span> <span class="nn">keras.wrappers.scikit_learn</span> <span class="k">import</span> <span class="n">KerasClassifier</span>
 <span class="c1">#SKLearn</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">StratifiedKFold</span>
-<span class="c1">#from sklearn.cross_validation import PredefinedSplit</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">PredefinedSplit</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">ExtraTreesClassifier</span><span class="p">,</span> <span class="n">RandomForestRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">make_scorer</span>
@@ -12370,9 +12506,10 @@ The same kind of machine learning model can require different constraints, weigh
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
         <span class="c1"># Network Parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_hidden_1</span> <span class="o">=</span> <span class="mi">25</span> <span class="c1"># 1st layer number of neurons</span>
-        <span class="c1">#self.n_hidden_2 = 10 # 2nd layer number of neurons</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_input</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1"># MNIST data input (img shape: 28*28)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_hidden_1</span> <span class="o">=</span> <span class="mi">25</span> 
+        <span class="c1">#self.n_hidden_2 = 10 </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_input</span> <span class="o">=</span> <span class="mi">6</span> 
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">1</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">activationFun</span> <span class="o">=</span> <span class="s1">&#39;relu&#39;</span>
 
@@ -12384,7 +12521,6 @@ The same kind of machine learning model can require different constraints, weigh
         <span class="c1"># sgd = SGD(lr=model_param[&#39;lr&#39;], momentum=model_param[&#39;momentum&#39;], decay=0.0, nesterov=False)</span>
         <span class="c1">#sgd=&quot;SGD&quot;</span>
         <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
-        <span class="c1">#model.fit(X, Y, nb_epoch=numEpoch, batch_size=10)</span>
         <span class="k">return</span> <span class="n">model</span>
 
     <span class="k">def</span> <span class="nf">createModelRFC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -12424,9 +12560,9 @@ The same kind of machine learning model can require different constraints, weigh
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;START&quot;</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;READING THE HYPER PARAMETERS FOR THE SELECTED MODEL&#39;</span><span class="p">)</span>
     <span class="n">param_grid</span> <span class="o">=</span> <span class="n">PARAM_DICT</span><span class="p">[</span><span class="n">nameModel</span><span class="p">]</span>
-    <span class="c1"># scoring = {&#39;Accuracy&#39;: make_scorer(accuracy_score),&#39;RMS&#39;:make_scorer(mean_squared_error)}</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;DEFINING THE SCORING FUNCTION FOR THE GRID SEARCH&#39;</span><span class="p">)</span>
     <span class="n">scoring</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;RMS&#39;</span><span class="p">:</span><span class="n">make_scorer</span><span class="p">(</span><span class="n">r2_score</span><span class="p">)}</span>
+    <span class="c1"># scoring = {&#39;Accuracy&#39;: make_scorer(accuracy_score),&#39;RMS&#39;:make_scorer(mean_squared_error)}</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;LOADING THE DATA SET&quot;</span><span class="p">)</span>
     <span class="n">ld</span> <span class="o">=</span> <span class="n">LoadData</span><span class="p">(</span><span class="n">tr</span><span class="o">=</span><span class="n">trainFile</span><span class="p">)</span>
     <span class="n">df2Pred</span> <span class="o">=</span> <span class="n">ld</span><span class="o">.</span><span class="n">readFiles</span><span class="p">(</span><span class="n">predFile</span><span class="p">)</span>
@@ -12435,8 +12571,6 @@ The same kind of machine learning model can require different constraints, weigh
     <span class="n">t</span><span class="o">=</span><span class="n">TestClass</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">nameModel</span> <span class="o">==</span> <span class="s1">&#39;NN&#39;</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">KerasClassifier</span><span class="p">(</span><span class="n">build_fn</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">createModelNN</span><span class="p">)</span>
-<span class="c1">#         X = X.as_matrix()</span>
-<span class="c1">#         Y = Y.as_matrix()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">createModelRFC</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;START GRID SEARCH&quot;</span><span class="p">)</span>
@@ -12457,7 +12591,7 @@ The same kind of machine learning model can require different constraints, weigh
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">grid_result</span> <span class="o">=</span> <span class="n">main</span><span class="p">(</span><span class="s1">&#39;RFC&#39;</span><span class="p">)</span>
@@ -12477,24 +12611,24 @@ The same kind of machine learning model can require different constraints, weigh
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>2018-10-14 12:44:18,508 : INFO : START
-2018-10-14 12:44:18,510 : INFO : READING THE HYPER PARAMETERS FOR THE SELECTED MODEL
-2018-10-14 12:44:18,512 : INFO : DEFINING THE SCORING FUNCTION FOR THE GRID SEARCH
-2018-10-14 12:44:18,513 : INFO : LOADING THE DATA SET
-2018-10-14 12:44:18,514 : INFO : READING data/target.csv
-2018-10-14 12:44:18,682 : INFO : LOADED DATASET WITH SHAPE (110000, 8) AND COLUMUNS Index([&#39;customer_id&#39;, &#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;, &#39;avg_bal&#39;,
+<pre>2018-10-19 19:33:34,206 : INFO : START
+2018-10-19 19:33:34,210 : INFO : READING THE HYPER PARAMETERS FOR THE SELECTED MODEL
+2018-10-19 19:33:34,212 : INFO : DEFINING THE SCORING FUNCTION FOR THE GRID SEARCH
+2018-10-19 19:33:34,213 : INFO : LOADING THE DATA SET
+2018-10-19 19:33:34,214 : INFO : READING data/target.csv
+2018-10-19 19:33:34,413 : INFO : LOADED DATASET WITH SHAPE (110000, 8) AND COLUMUNS Index([&#39;customer_id&#39;, &#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;, &#39;avg_bal&#39;,
        &#39;geo_group&#39;, &#39;res_type&#39;, &#39;Unnamed: 7&#39;],
       dtype=&#39;object&#39;)
-2018-10-14 12:44:18,719 : INFO : READING data/promoted.csv
-2018-10-14 12:44:18,757 : INFO : LOADED DATASET WITH SHAPE (25000, 8) AND COLUMUNS Index([&#39;customer_id&#39;, &#39;resp&#39;, &#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;,
+2018-10-19 19:33:34,474 : INFO : READING data/promoted.csv
+2018-10-19 19:33:34,520 : INFO : LOADED DATASET WITH SHAPE (25000, 8) AND COLUMUNS Index([&#39;customer_id&#39;, &#39;resp&#39;, &#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;,
        &#39;avg_bal&#39;, &#39;geo_group&#39;, &#39;res_type&#39;],
       dtype=&#39;object&#39;)
-2018-10-14 12:44:18,780 : INFO : REMOVING ROWS WITH NA
-2018-10-14 12:44:18,781 : INFO : NROWS BEFORE REMOVING NA 25000
-2018-10-14 12:44:18,792 : INFO : NROWS AFTER REMOVING NA 22400
-2018-10-14 12:44:18,794 : INFO : SCALING OF NUMERIC COLUMNS
-2018-10-14 12:44:18,810 : INFO : CONSIDERING LEVELS FOR CATEGORICAL COLUMNS
-2018-10-14 12:44:18,813 : INFO : AFTER PREPROCESSING X_train HAS COLUMUNS Index([&#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;, &#39;avg_bal&#39;, &#39;geo_group&#39;,
+2018-10-19 19:33:34,539 : INFO : REMOVING ROWS WITH NA
+2018-10-19 19:33:34,540 : INFO : NROWS BEFORE REMOVING NA 25000
+2018-10-19 19:33:34,548 : INFO : NROWS AFTER REMOVING NA 22400
+2018-10-19 19:33:34,552 : INFO : SCALING OF NUMERIC COLUMNS
+2018-10-19 19:33:34,570 : INFO : CONSIDERING LEVELS FOR CATEGORICAL COLUMNS
+2018-10-19 19:33:34,573 : INFO : AFTER PREPROCESSING X_train HAS COLUMUNS Index([&#39;card_tenure&#39;, &#39;risk_score&#39;, &#39;num_promoted&#39;, &#39;avg_bal&#39;, &#39;geo_group&#39;,
        &#39;res_type&#39;],
       dtype=&#39;object&#39;) AND TYPES card_tenure     float64
 risk_score      float64
@@ -12503,11 +12637,11 @@ avg_bal           int16
 geo_group          int8
 res_type           int8
 dtype: object
-2018-10-14 12:44:18,816 : INFO : CREATION OF THE MODEL
-2018-10-14 12:44:18,817 : INFO : DEFINITION OF THE MODEL RFC
-2018-10-14 12:44:18,818 : INFO : MODEL PARAMS: {&#39;bootstrap&#39;: True, &#39;class_weight&#39;: None, &#39;criterion&#39;: &#39;gini&#39;, &#39;max_depth&#39;: None, &#39;max_features&#39;: &#39;auto&#39;, &#39;max_leaf_nodes&#39;: None, &#39;min_impurity_decrease&#39;: 0.0, &#39;min_impurity_split&#39;: None, &#39;min_samples_leaf&#39;: 1, &#39;min_samples_split&#39;: 2, &#39;min_weight_fraction_leaf&#39;: 0.0, &#39;n_estimators&#39;: 10, &#39;n_jobs&#39;: -1, &#39;oob_score&#39;: False, &#39;random_state&#39;: None, &#39;verbose&#39;: 0, &#39;warm_start&#39;: False}
-2018-10-14 12:44:18,819 : INFO : START GRID SEARCH
-2018-10-14 12:44:18,820 : INFO : START GRID SEARCH
+2018-10-19 19:33:34,575 : INFO : CREATION OF THE MODEL
+2018-10-19 19:33:34,576 : INFO : DEFINITION OF THE MODEL RFC
+2018-10-19 19:33:34,580 : INFO : MODEL PARAMS: {&#39;bootstrap&#39;: True, &#39;class_weight&#39;: None, &#39;criterion&#39;: &#39;gini&#39;, &#39;max_depth&#39;: None, &#39;max_features&#39;: &#39;auto&#39;, &#39;max_leaf_nodes&#39;: None, &#39;min_impurity_decrease&#39;: 0.0, &#39;min_impurity_split&#39;: None, &#39;min_samples_leaf&#39;: 1, &#39;min_samples_split&#39;: 2, &#39;min_weight_fraction_leaf&#39;: 0.0, &#39;n_estimators&#39;: 10, &#39;n_jobs&#39;: -1, &#39;oob_score&#39;: False, &#39;random_state&#39;: None, &#39;verbose&#39;: 0, &#39;warm_start&#39;: False}
+2018-10-19 19:33:34,583 : INFO : START GRID SEARCH
+2018-10-19 19:33:34,584 : INFO : START GRID SEARCH
 </pre>
 </div>
 </div>
@@ -12541,55 +12675,56 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 [CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20 
 [CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20 
 [CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
-[CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
-[CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264569, total=   0.4s
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264591, total=   0.4s
+[CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50 
+[CV] max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50 
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.4s
 [CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.5s
 [CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.4s
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.4s
-[CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
+[CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20 
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.4s
+[CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50 
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.5s
 [CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
 [CV] max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
 [CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.4s
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.3s
 [CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.4s
+[CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.5s
 [CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20 
 [CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
 [CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
-[CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50 
 [CV]  max_depth=5, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.5s
 [CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.2s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
+[CV] max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50 
+[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
 [CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.3s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.6s
 [CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.5s
 [CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.6s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.4s
+[CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50 
+[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.2s
 [CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
 [CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.6s
-[CV] max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.2s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20 
 [CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.4s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20 
 [CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.5s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264569, total=   0.4s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07571300997483843, total=   0.3s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.7s
+[CV]  max_depth=5, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.5s
+[CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50 
 </pre>
 </div>
 </div>
@@ -12600,7 +12735,7 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>[Parallel(n_jobs=-1)]: Done  24 tasks      | elapsed:    3.3s
+<pre>[Parallel(n_jobs=-1)]: Done  24 tasks      | elapsed:    3.4s
 </pre>
 </div>
 </div>
@@ -12611,97 +12746,96 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07571300997483865, total=   0.2s
+<pre>[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07571300997483865, total=   0.3s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV] max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07572361680327866, total=   0.3s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.2s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.5s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07780991642703117, total=   0.5s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.5s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07151919707045318, total=   0.6s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20 
+[CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.6s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.7s
 [CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.7s
-[CV] max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.2s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
 [CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07571300997483843, total=   0.4s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.6s
+[CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20 
+[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07571300997483843, total=   0.3s
 [CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20 
 [CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.7s
-[CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.8s
 [CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.7s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07780991642703117, total=   0.3s
 [CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07572361680327866, total=   0.3s
+[CV]  max_depth=10, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.8s
 [CV] max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07361610352264591, total=   0.4s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
+[CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20 
+[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.5s
+[CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20 
+[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.2s
 [CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20 
 [CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264591, total=   0.7s
-[CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07361610352264569, total=   0.8s
-[CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.6s
 [CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.07362668967500707, total=   0.5s
 [CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
 [CV] max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.2s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.4s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.6s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.7s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.2183026487239399, total=   0.4s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.1973335842020132, total=   0.4s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.8s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.6s
+[CV]  max_depth=10, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.5s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.22878718098490336, total=   0.5s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.2518531519590226, total=   0.3s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.18895768172993943, total=   0.3s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=20, RMS=-0.19944231737129692, total=   0.4s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.4s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.3s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.20781811646297643, total=   0.8s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.21410883581955442, total=   1.0s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.24346552615025185, total=   0.8s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.2392717132458666, total=   1.0s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.20783002588438304, total=   0.9s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=1, n_estimators=50, RMS=-0.20573309875611145, total=   0.9s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.4s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
 [CV] max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.4s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.7s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.1973335842020132, total=   0.3s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.2266902745327104, total=   0.6s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.9s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.9s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.8s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.8s
+[CV]  max_depth=None, max_features=auto, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.7s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.2455624326024446, total=   0.4s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.2455624326024446, total=   0.3s
 [CV] max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.2015392444995685, total=   0.3s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=20, RMS=-0.19315153598648238, total=   0.4s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20 
 [CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264569, total=   0.4s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.1973335842020132, total=   1.1s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.24346552615025185, total=   0.8s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.21620574227174716, total=   1.0s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.3s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.2539500584112153, total=   1.1s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.18056997321685353, total=   0.8s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07361610352264591, total=   0.2s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50 
-[CV]  max_depth=None, max_features=2, min_samples_leaf=1, n_estimators=50, RMS=-0.19105460885821102, total=   1.1s
 [CV] max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50 
 [CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=20, RMS=-0.07362668967500707, total=   0.3s
-[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.9s
-[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.9s
-[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.8s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264569, total=   0.8s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07361610352264591, total=   0.5s
+[CV]  max_depth=None, max_features=2, min_samples_leaf=10, n_estimators=50, RMS=-0.07362668967500707, total=   0.7s
 </pre>
 </div>
 </div>
@@ -12712,14 +12846,14 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>[Parallel(n_jobs=-1)]: Done  72 out of  72 | elapsed:   11.7s finished
-2018-10-14 12:44:30,914 : INFO : END GRID SEARCH
-2018-10-14 12:44:30,916 : INFO : END OF GRID SEARCH
-2018-10-14 12:44:30,917 : INFO : PRINTING RESULTS
-2018-10-14 12:44:30,921 : INFO : Best: -0.073620 using {&#39;max_depth&#39;: 5, &#39;max_features&#39;: &#39;auto&#39;, &#39;min_samples_leaf&#39;: 1, &#39;n_estimators&#39;: 20}
-2018-10-14 12:44:31,058 : INFO : SAVED BEST MODEL IN best_model_grid_RFC.pkl
-2018-10-14 12:44:31,059 : INFO : EXECUTED IN 12.550397 SEC
-2018-10-14 12:44:31,059 : INFO : END
+<pre>[Parallel(n_jobs=-1)]: Done  72 out of  72 | elapsed:   11.4s finished
+2018-10-19 19:33:46,304 : INFO : END GRID SEARCH
+2018-10-19 19:33:46,305 : INFO : END OF GRID SEARCH
+2018-10-19 19:33:46,306 : INFO : PRINTING RESULTS
+2018-10-19 19:33:46,307 : INFO : Best: -0.073620 using {&#39;max_depth&#39;: 5, &#39;max_features&#39;: &#39;auto&#39;, &#39;min_samples_leaf&#39;: 1, &#39;n_estimators&#39;: 20}
+2018-10-19 19:33:46,444 : INFO : SAVED BEST MODEL IN best_model_grid_RFC.pkl
+2018-10-19 19:33:46,447 : INFO : EXECUTED IN 12.240158 SEC
+2018-10-19 19:33:46,447 : INFO : END
 </pre>
 </div>
 </div>
@@ -12763,7 +12897,22 @@ Fitting 3 folds for each of 24 candidates, totalling 72 fits
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Autoencoders">Autoencoders<a class="anchor-link" href="#Autoencoders">&#182;</a></h2>
+<h2 id="Autoencoders">Autoencoders<a class="anchor-link" href="#Autoencoders">&#182;</a></h2><p>Autoencoders are the half way between <em>supervised</em> and <em>unsupervised</em> learning: the input and the output are the same, so the networking it's learning from itself.</p>
+<p>For this reason they are called <strong>self-supervised</strong>.</p>
+<p>From the <a href="https://blog.keras.io/building-autoencoders-in-keras.html">man page</a> of Keras:</p>
+<p><em>Autoencoding is a data compression algorithm where the compression and decompression functions are 1) data-specific, 2) lossy, and 3) learned automatically from examples rather than engineered by a human. Additionally, in almost all contexts where the term "autoencoder" is used, the compression and decompression functions are implemented with neural networks.</em></p>
+<ol>
+<li><em>Autoencoders are data-specific, which means that they will only be able to compress data similar to what they have been trained on. This is different from, say, the MPEG-2 Audio Layer III (MP3) compression algorithm, which only holds assumptions about "sound" in general, but not about specific types of sounds. An autoencoder trained on pictures of faces would do a rather poor job of compressing pictures of trees, because the features it would learn would be face-specific.</em></li>
+<li><em>Autoencoders are lossy, which means that the decompressed outputs will be degraded compared to the original inputs (similar to MP3 or JPEG compression). This differs from lossless arithmetic compression.</em></li>
+<li><em>Autoencoders are learned automatically from data examples, which is a useful property: it means that it is easy to train specialized instances of the algorithm that will perform well on a specific type of input. It doesn't require any new engineering, just appropriate training data.</em></li>
+</ol>
+<p>What autoencoders are good for:</p>
+<ul>
+<li>Data Denoising</li>
+<li>Dimension Reduction</li>
+<li>Data Visualization (basically the same as 2, but plots)</li>
+</ul>
+
 </div>
 </div>
 </div></section><section>
